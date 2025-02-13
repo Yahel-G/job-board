@@ -3,12 +3,13 @@ import Jobs from "@/app/components/Jobs";
 import { Job, JobModel } from "@/models/Job";
 import mongoose from "mongoose";
 import { FavoriteJobsModel } from "@/models/FavoriteJobs";
+import { JSX } from "react";
 
 type FavoritesContentProps = {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 };
 
-export default async function FavoritesContent({ params }: FavoritesContentProps) {
+export default async function FavoritesContent({ params }: FavoritesContentProps): Promise<JSX.Element> {
   await mongoose.connect(process.env.MONGO_URI as string);
   
   const par = await params;
@@ -30,7 +31,7 @@ export default async function FavoritesContent({ params }: FavoritesContentProps
   
   return (
     <div>
-      <div className="container">
+      <div className="container mx-auto">
         <h1 className="text-xl mb-6">Favorite Jobs</h1>
       </div>
       <Jobs jobs={jobsDocs} header="Favorite Jobs" userId={userId} />

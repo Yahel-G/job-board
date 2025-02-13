@@ -101,9 +101,9 @@ export default function JobForm({orgId,jDoc,orgName}:{orgId:string,jDoc?:Job,org
                 <div>
                     Location
                         <div className="flex flex-col sm:flex-row gap-4 *:grow">
-                        <CountrySelect defaultValue={countryId ? {id:countryId, name:country} : 0} onChange={(e:any) => {setCountryId(e.id); setCountryName(e.name);}} placeHolder="Select country" />
-                            <StateSelect defaultValue={stateId ? {id:stateId, name:state} : 0} countryid={countryId} onChange={(e:any) => {setStateId(e.id); setStateName(e.name);}} placeHolder="Select state/district" />
-                            <CitySelect defaultValue={cityId ? {id:cityId, name:city} : 0} countryid={countryId} stateid={stateId} onChange={(e:any) => {setCityId(e.id); setCityName(e.name);}} placeHolder="Select city" />
+                        <CountrySelect defaultValue={countryId ? ({ id: countryId, name: country } as any) : undefined} onChange={(e: any) => { setCountryId(e.id); setCountryName(e.name); }} placeHolder="Select country" />
+                        <StateSelect defaultValue={stateId ? ({id:stateId, name:state} as any) : undefined} countryid={countryId} onChange={(e:any) => {setStateId(e.id); setStateName(e.name);}} placeHolder="Select state/district" />
+                            <CitySelect defaultValue={cityId ? ({id:cityId, name:city} as any) : undefined} countryid={countryId} stateid={stateId} onChange={(e:any) => {setCityId(e.id); setCityName(e.name);}} placeHolder="Select city" />
                         </div>                    
                     </div>
                     <div className="sm:flex">
