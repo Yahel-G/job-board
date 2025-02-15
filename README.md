@@ -11,6 +11,7 @@ A job board website built with Next.js, Tailwind CSS, WorkOS, and MongoDB. This 
 - **Image Uploads:** Supports uploading job icons and contact photos.
 - **Server-Side Rendering:** Utilizes Next.js server components with MongoDB (via Mongoose) for data fetching.
 - **ChatGPT Processing:** Optionally process job descriptions with ChatGPT (configurable via a checkbox).
+- **AWS Integration:** Uses AWS (e.g., S3) for asset storage.
 
 ## Getting Started
 
@@ -18,11 +19,13 @@ Follow these instructions to set up the project locally for development and test
 
 ### Prerequisites
 
-- **Node.js:** Latest LTS version is recommended (e.g., Node.js 18.x).
+- **Node.js:** Latest LTS version is recommended (e.g., Node.js 22.x).
 - **pnpm:** Preferred package manager (alternatively, you can use npm or yarn).
 - **MongoDB:** A MongoDB instance (local or cloud) with a connection URI.
 - **WorkOS Account:** For user authentication and organization management.
+- **AWS Account:** For asset storage and integration (e.g., AWS S3).
 - **Git:** For version control.
+- **Optional:** An OpenAPI Premium account for advanced AI features.
 
 ### Installation
 
@@ -47,6 +50,12 @@ Follow these instructions to set up the project locally for development and test
    MONGO_URI=your_mongodb_connection_uri
    WORKOS_API_KEY=your_workos_api_key
    NEXT_PUBLIC_WORKOS_REDIRECT_URI=http://localhost:3000/api/auth/callback
+   WORKOS_CLIENT_ID=your_workos_client_id
+   WORKOS_COOKIE_PASSWORD=your_workos_cookie_password
+   S3_ACCESS_KEY=your_s3_key
+   S3_SECRET_ACCESS_KEY=your_s3_secret_key
+   OPENAI_API_KEY=your_open_api_key
+
    ```
 
    For production, update these variables in your deployment platform's environment settings.
