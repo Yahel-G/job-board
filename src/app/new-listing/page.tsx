@@ -40,7 +40,7 @@ export default async function NewListingPage() {
         <h2 className="text-lg mt-6">Your companies</h2>
         <p className="text-gray-500 text-sm mb-2">Select a company to create a job add for</p>
         <div>
-          {organizationsNames.length ? ( 
+          {Object.keys(organizationsNames).length > 0 ? ( 
             <div className="border inline-block rounded-md">
               {Object.keys(organizationsNames).map(orgId => (
                 <Link
