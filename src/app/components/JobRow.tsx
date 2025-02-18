@@ -64,7 +64,7 @@ export default function JobRow({jobDoc, userId, initialFavorited = false}: {jobD
                             {' '}&middot;{' '}
                             <Link href={'/jobs/edit/'+jobDoc._id}>Edit</Link>
                             {' '}&middot;{' '}
-                            <button type="button" 
+                            <button className="hover:background-color-gray-800" type="button" 
                             onClick={async () => {
                                 await axios.delete('/api/jobs?id='+jobDoc._id);
                                 window.location.reload();

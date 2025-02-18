@@ -29,11 +29,11 @@ export default async function SingleJobContent({ params }: JobContentProps): Pro
         <div className="grow">
           <h1 className="text-4xl mb-2">{jobDoc.title}</h1>
           <div className="capitalize text-sm text-blue-800 mb-4">
-            {jobDoc.remote}
+            {jobDoc.model}
             {' '}&middot;{' '}
-            {jobDoc.city}, {jobDoc.country}
+            {jobDoc.city ? `${jobDoc.city}, ` : ''} {jobDoc.country}
             {' '}&middot;{' '}
-            {jobDoc.type}-time
+            {jobDoc.type}
           </div>
         </div>
         <div>
