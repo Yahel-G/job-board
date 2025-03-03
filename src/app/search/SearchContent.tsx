@@ -1,6 +1,5 @@
 'use server'
 import Jobs from "@/app/components/Jobs";
-import JobForm from "@/app/components/JobForm";
 import { addOrgAndUserData, Job, JobModel } from "@/models/Job";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { WorkOS } from "@workos-inc/node";
@@ -8,25 +7,25 @@ import mongoose from "mongoose";
 import { FavoriteJobsModel } from "@/models/FavoriteJobs";
 import { JSX } from "react";
 
-type CompanyJobContentProps = {
-  params: Promise<{ orgId: string }>;
+type SearchContentProps = {
+  params: Promise<{ input: string }>;
 };
 
-export default async function CompanyJobContent({ params }: CompanyJobContentProps): Promise<JSX.Element> {
-  // Wait for the thenable params to resolve
+export default async function SearchContent({ params }: SearchContentProps): Promise<JSX.Element> {
   const resolvedParams = await params;
-  const orgId = resolvedParams.orgId;
+  const input = resolvedParams.input;
   
   await mongoose.connect(process.env.MONGO_URI as string);
   
-  const workos = new WorkOS(process.env.WORKOS_API_KEY);
-  const org = await workos.organizations.getOrganization(orgId);
-  
   const { user } = await withAuth();
+  
   
   let jobsDocs: Job[] = JSON.parse(JSON.stringify(
     await JobModel.find({
-      orgName: { $regex: new RegExp(org.name, 'i') }
+      $or: [
+        { orgName: { $regex: new RegExp(input, 'i') } },
+        { title: { $regex: new RegExp(input, 'i') } }
+      ]
     })
   ));
   
@@ -34,6 +33,7 @@ export default async function CompanyJobContent({ params }: CompanyJobContentPro
   
   const userId = user ? user.id : '';
   
+  // This is just to mark the heart icons in case a job is already favorited
   const favDoc = await FavoriteJobsModel.findOne({ userId });
   let favoriteJobIds: string[] = [];
   if (favDoc) {
@@ -43,9 +43,9 @@ export default async function CompanyJobContent({ params }: CompanyJobContentPro
   return (
     <div>
       <div className="container mx-auto">
-        <h1 className="text-xl mb-6">{org.name} Jobs</h1>
+        <h1 className="text-xl mb-6">Search results</h1>
       </div>
-      <Jobs jobs={jobsDocs} header={"Jobs posted by " + org.name} userId={userId} favoriteJobIds={favoriteJobIds} />
+      <Jobs jobs={jobsDocs} header={"Showing results for " + input} userId={userId} favoriteJobIds={favoriteJobIds} />
     </div>
   );
 }
